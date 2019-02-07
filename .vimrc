@@ -66,9 +66,11 @@ map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 " This will execute the current line in bash silently
 map <Leader>e :exe "silent .w !bash" <CR>
 
-" Easily adjust vertical splits
+" Easily adjust splits
 nnoremap <silent> = 10<C-w>>
 nnoremap <silent> - 10<C-w><
+nnoremap <silent> _ 10<C-w>-
+nnoremap <silent> + 10<C-w>+
 
 " The following F2, F3 commands save and open a session
 map <F2> :mksession! ~/.vim_session <cr>
