@@ -47,15 +47,17 @@ let mapleader=" "
 set splitbelow splitright
 
 " Shortcutting split navigation, saving a keypress:
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+" the following few are old mappings from before I embraced hjkl which is why
+" they are commente out.
+"map <Leader><left> <C-w>h
+"map <Leader><right> <C-w>l
+"map <Leader><up> <C-w>k
+"map <Leader><down> <C-w>j
 
-map <Leader><left> <C-w>h
-map <Leader><right> <C-w>l
-map <Leader><up> <C-w>k
-map <Leader><down> <C-w>j
+map <Leader>h <C-w>h
+map <Leader>j <C-w>j
+map <Leader>k <C-w>k
+map <Leader>l <C-w>l
 
 " Quicker switch to previous buffer
 map <Leader>b <C-^>
