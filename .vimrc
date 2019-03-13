@@ -125,8 +125,12 @@ execute pathogen#infect()
 map <Leader>o :NERDTreeToggle<CR>
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'wombat',
       \ }
 set noshowmode
 
 " https://github.com/plasticboy/vim-markdown
+
+let g:vimwiki_list = [{'path': '~/Documents/compulse_notebook/',
+                       \ 'index': 'index', 'ext': '.md', 'syntax': 'markdown'}]
+" let g:vimwiki_folding = 'list'
