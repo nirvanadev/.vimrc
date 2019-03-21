@@ -68,6 +68,9 @@ map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 " This will execute the current line in bash silently
 map <Leader>e :exe "silent .w !bash" <CR>
 
+" toggle goyo - marginalized views
+map <Leader>f :Goyo \| set linebreak<CR>
+
 " Easily adjust splits
 nnoremap <silent> = 10<C-w>>
 nnoremap <silent> - 10<C-w><
@@ -131,6 +134,13 @@ set noshowmode
 
 " https://github.com/plasticboy/vim-markdown
 
-let g:vimwiki_list = [{'path': '~/Documents/compulse_notebook/',
-                       \ 'index': 'index', 'ext': '.md', 'syntax': 'markdown'}]
+let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
+                       \ 'index': 'index', 'ext': '.md'}]
 " let g:vimwiki_folding = 'list'
+
+autocmd BufWritePost ~/notes/*.md silent! call WriteNotes2Server()
+function WriteNotes2Server()
+    :VimwikiAll2HTML
+    :silent !sed -i '/^<\/head>.*/i <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">' ~/notes_html/*.html &>/dev/null
+    :silent !scp -r ~/notes_html/. pi@192.168.1.2:/var/www/html/notes/ &>/dev/null
+endfunction
