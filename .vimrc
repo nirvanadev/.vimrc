@@ -138,9 +138,9 @@ let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
                        \ 'index': 'index', 'ext': '.md'}]
 " let g:vimwiki_folding = 'list'
 
-autocmd BufWritePost ~/notes/*.md silent! call WriteNotes2Server()
+autocmd BufWritePost ~/notes/*.md call WriteNotes2Server()
 function WriteNotes2Server()
-    :VimwikiAll2HTML
-    :silent !sed -i '/^<\/head>.*/i <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">' ~/notes_html/*.html &>/dev/null
-    :silent !scp -r ~/notes_html/. pi@192.168.1.2:/var/www/html/notes/ &>/dev/null
+    :Vimwiki2HTML
+    :!rsync -ru -e 'ssh -p 7822' ~/notes_html/* nirvananotes@notes.nirvanasites.com:~/public_html/
+    :redraw!
 endfunction
