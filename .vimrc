@@ -157,6 +157,13 @@ set noshowmode
 
 " https://github.com/plasticboy/vim-markdown
 
-let g:vimwiki_list = [{'path': '~/Documents/compulse_notebook/',
-                       \ 'index': 'index', 'ext': '.md', 'syntax': 'markdown'}]
+let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
+                       \ 'index': 'index', 'ext': '.md'}]
 " let g:vimwiki_folding = 'list'
+
+autocmd BufWritePost ~/notes/*.md call WriteNotes2Server()
+function WriteNotes2Server()
+    :Vimwiki2HTML
+    :!rsync -ru -e 'ssh -p 7822' ~/notes_html/* nirvananotes@notes.nirvanasites.com:~/public_html/
+    :redraw!
+endfunction
