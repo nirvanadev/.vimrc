@@ -22,6 +22,8 @@ set noerrorbells                "No sounds
 set novisualbell                "No flashing
 set autoread                    "Reload files changed outside vim
 set encoding=utf-8
+set ttimeout
+set ttimeoutlen=0
 
 " Enable autocompletion:
 set wildmode=longest,list,full
@@ -62,11 +64,28 @@ map <Leader>l <C-w>l
 " Quicker switch to previous buffer
 map <Leader>b <C-^>
 
+" Close current buffer quicker
+map <Leader>c :exe "bwipeout" <CR>
+
 " Close current buffer and return to previous
 map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 
 " This will execute the current line in bash silently
 map <Leader>e :exe "silent .w !bash" <CR>
+
+" Toggle GOYO
+map <Leader>f :Goyo \| set linebreak <CR>
+
+" Quickly switch between php and html syntax
+map <Leader>s :call PHPToggle()<CR>
+" Function to check the filetype and switch accordingly
+function! PHPToggle()
+    if &ft == "php"
+        set ft=html
+    elseif &ft == "html"
+        set ft=php
+    endif
+endfunction
 
 " Easily adjust splits
 nnoremap <silent> = 10<C-w>>
@@ -126,6 +145,13 @@ map <Leader>o :NERDTreeToggle<CR>
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \     'left': [ [ 'mode', 'paste' ],
+      \               [ 'readonly', 'filename', 'modified', 'myname' ] ]
+      \ },
+      \ 'component': {
+      \     'myname': 'K33F'
+      \ }
       \ }
 set noshowmode
 
