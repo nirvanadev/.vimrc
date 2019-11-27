@@ -24,6 +24,9 @@ set autoread                    "Reload files changed outside vim
 set encoding=utf-8
 set ttimeout
 set ttimeoutlen=0
+set hlsearch
+set showmatch
+
 
 " Enable autocompletion:
 set wildmode=longest,list,full
@@ -63,12 +66,14 @@ map <Leader>l <C-w>l
 
 " Quicker switch to previous buffer
 map <Leader>b <C-^>
+map <Leader>n :exe "bn" <CR>
 
 " Close current buffer quicker
 map <Leader>c :exe "bwipeout" <CR>
 
 " Close current buffer and return to previous
 map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
+map <Leader>x :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 
 " This will execute the current line in bash silently
 map <Leader>e :exe "silent .w !bash" <CR>
@@ -87,6 +92,12 @@ function! PHPToggle()
     endif
 endfunction
 
+" Quick Command Prompt
+map <Leader><Leader> :
+
+" Quick Emmet Wrap
+map <leader><cr> <c-y>,
+
 " Easily adjust splits
 nnoremap <silent> = 10<C-w>>
 nnoremap <silent> - 10<C-w><
@@ -98,21 +109,29 @@ map <F2> :mksession! ~/.vim_session <cr>
 map <F3> :source ~/.vim_session <cr>
 
 " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
-vnoremap <C-c> "+y
-map <C-p> "+P
+" vnoremap <C-c> "+y
+" map <C-p> "+P
+set clipboard=unnamed
 
 " Replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
 
+" Go Back to last cursor position
+nmap <C-B> <C-O>
+
+" Save as sudo and load file back in
+map <Leader>w :silent w !sudo tee %
+
 " ================ Indentation ======================
 
 set autoindent
-set smartindent
-set smarttab
+set copyindent
+set incsearch
+set nosmarttab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-set expandtab
+set noexpandtab
 
 filetype plugin indent on
 
@@ -160,6 +179,10 @@ set noshowmode
 let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
                        \ 'index': 'index', 'ext': '.md'}]
 " let g:vimwiki_folding = 'list'
+"
+
+let g:php_syntax_extensions_enabled = ["php"]
+let g:PHP_outdentphpescape = 0
 
 autocmd BufWritePost ~/notes/*.md call WriteNotes2Server()
 function WriteNotes2Server()
@@ -167,3 +190,5 @@ function WriteNotes2Server()
     :!rsync -ru -e 'ssh -p 7822' ~/notes_html/* nirvananotes@notes.nirvanasites.com:~/public_html/
     :redraw!
 endfunction
+
+
