@@ -59,17 +59,24 @@ set splitbelow splitright
 "map <Leader><up> <C-w>k
 "map <Leader><down> <C-w>j
 
-map <Leader>h <C-w>h
-map <Leader>j <C-w>j
-map <Leader>k <C-w>k
-map <Leader>l <C-w>l
+"Switch panes easier. Old. Before tmux/iterm
+" map <Leader>h <C-w>h
+" map <Leader>j <C-w>j
+" map <Leader>k <C-w>k
+" map <Leader>l <C-w>l
+
+map <Leader>h :exe "noh" <CR>
+
+" Orgmode mappings
+map <Leader>oa <Plug>OrgNewHeadingAboveNormal
+map <Leader>ob <Plug>OrgNewHeadingBelowNormal
+map <Leader>c <Plug>OrgCheckBoxToggle
 
 " Quicker switch to previous buffer
-map <Leader>b <C-^>
 map <Leader>n :exe "bn" <CR>
 
 " Close current buffer quicker
-map <Leader>c :exe "bwipeout" <CR>
+map <Leader>q :exe "bwipeout" <CR>
 
 " Close current buffer and return to previous
 map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
@@ -79,7 +86,11 @@ map <Leader>x :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 map <Leader>e :exe "silent .w !bash" <CR>
 
 " Toggle GOYO
-map <Leader>f :Goyo \| set linebreak <CR>
+map <Leader>d :Goyo \| set linebreak <CR>
+
+" FZF
+map <Leader>f :Files <CR>
+map <Leader>b :Buffers <CR>
 
 " Quickly switch between php and html syntax
 map <Leader>s :call PHPToggle()<CR>
@@ -176,8 +187,8 @@ set noshowmode
 
 " https://github.com/plasticboy/vim-markdown
 
-let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
-                       \ 'index': 'index', 'ext': '.md'}]
+" let g:vimwiki_list = [{'path': '~/notes/', 'path_html': '~/notes_html/',
+"                        \ 'index': 'index', 'ext': '.md'}]
 " let g:vimwiki_folding = 'list'
 "
 
@@ -191,4 +202,7 @@ function WriteNotes2Server()
     :redraw!
 endfunction
 
+set rtp+=/usr/local/opt/fzf
 
+autocmd FileType php setlocal indentkeys-==<?
+autocmd FileType php setlocal indentkeys-==?>
