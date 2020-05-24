@@ -8,10 +8,9 @@
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 
-set nocompatible
 
 " ================ General Config ====================
-
+set nocompatible
 set number relativenumber       "Line numbers are good
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
@@ -26,6 +25,8 @@ set ttimeout
 set ttimeoutlen=0
 set hlsearch
 set showmatch
+set mouse=nicr
+set viminfo='100,f1
 
 
 " Enable autocompletion:
@@ -51,26 +52,29 @@ let mapleader=" "
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 set splitbelow splitright
 
-" Shortcutting split navigation, saving a keypress:
-" the following few are old mappings from before I embraced hjkl which is why
-" they are commente out.
-"map <Leader><left> <C-w>h
-"map <Leader><right> <C-w>l
-"map <Leader><up> <C-w>k
-"map <Leader><down> <C-w>j
+" Set 256 Color Mode
+set t_Co=256
 
-"Switch panes easier. Old. Before tmux/iterm
-" map <Leader>h <C-w>h
-" map <Leader>j <C-w>j
-" map <Leader>k <C-w>k
-" map <Leader>l <C-w>l
-
-map <Leader>h :exe "noh" <CR>
+" Remove highlight on searches
+map <Leader>0 :exe "noh" <CR>
 
 " Orgmode mappings
-map <Leader>oa <Plug>OrgNewHeadingAboveNormal
-map <Leader>ob <Plug>OrgNewHeadingBelowNormal
 map <Leader>c <Plug>OrgCheckBoxToggle
+map <Leader>k <Plug>OrgNewHeadingAboveNormal
+map <Leader>j <Plug>OrgNewHeadingBelowNormal
+
+" Open commonly used files quicker
+map <Leader>1 :exe "e ~/ownCloud/hd1/orgnotes/work/compulse/log.org" <CR>
+map <Leader>2 :exe "e ~/ownCloud/hd1/orgnotes/work/compulse/tasks.org" <CR>
+map <Leader>3 :exe "e ~/code_snippets/MySQL Add WP Admin.txt" <CR>
+
+" Quick Tab Movements
+map <Leader>l :tabnext <CR>
+map <Leader>h :tabprev <CR>
+
+" Quicker scrolling
+nnoremap <PageUp> <C-u>
+nnoremap <PageDown> <C-d>
 
 " Quicker switch to previous buffer
 map <Leader>n :exe "bn" <CR>
@@ -86,14 +90,14 @@ map <Leader>x :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
 map <Leader>e :exe "silent .w !bash" <CR>
 
 " Toggle GOYO
-map <Leader>d :Goyo \| set linebreak <CR>
+" map <Leader>d :Goyo \| set linebreak <CR>
 
 " FZF
 map <Leader>f :Files <CR>
 map <Leader>b :Buffers <CR>
 
 " Quickly switch between php and html syntax
-map <Leader>s :call PHPToggle()<CR>
+map <Leader>t :call PHPToggle()<CR>
 " Function to check the filetype and switch accordingly
 function! PHPToggle()
     if &ft == "php"
@@ -116,8 +120,8 @@ nnoremap <silent> _ 10<C-w>-
 nnoremap <silent> + 10<C-w>+
 
 " The following F2, F3 commands save and open a session
-map <F2> :mksession! ~/.vim_session <cr>
-map <F3> :source ~/.vim_session <cr>
+nnoremap <Leader>ss :mksession! ~/vim-sessions/
+nnoremap <Leader>so :source ~/vim-sessions/
 
 " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
 " vnoremap <C-c> "+y
@@ -172,6 +176,7 @@ execute pathogen#infect()
 "
 " https://vimawesome.com/plugin/nerdtree-red
 map <Leader>o :NERDTreeToggle<CR>
+map <Leader>i :NERDTreeFind<CR>
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'wombat',
@@ -206,3 +211,8 @@ set rtp+=/usr/local/opt/fzf
 
 autocmd FileType php setlocal indentkeys-==<?
 autocmd FileType php setlocal indentkeys-==?>
+
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
