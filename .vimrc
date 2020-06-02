@@ -58,33 +58,41 @@ set t_Co=256
 " Remove highlight on searches
 map <Leader>0 :exe "noh" <CR>
 
+" NERDTree
+map <Leader>no :NERDTreeToggle<CR>
+map <Leader>ni :NERDTreeFind<CR>
+
 " Orgmode mappings
-map <Leader>c <Plug>OrgCheckBoxToggle
-map <Leader>k <Plug>OrgNewHeadingAboveNormal
-map <Leader>j <Plug>OrgNewHeadingBelowNormal
+map <Leader>ok <Plug>OrgNewHeadingAboveNormal
+map <Leader>oj <Plug>OrgNewHeadingBelowNormal
+map <Leader>oc <Plug>OrgCheckBoxToggle
 
-" Open commonly used files quicker
-map <Leader>1 :exe "e ~/ownCloud/hd1/orgnotes/work/compulse/log.org" <CR>
-map <Leader>2 :exe "e ~/ownCloud/hd1/orgnotes/work/compulse/tasks.org" <CR>
-map <Leader>3 :exe "e ~/code_snippets/MySQL Add WP Admin.txt" <CR>
+" Split jumping
+nnoremap <Leader>wl <C-W><C-L>
+nnoremap <Leader>wh <C-W><C-H>
+nnoremap <Leader>wk <C-W><C-K>
+nnoremap <Leader>wj <C-W><C-J>
 
-" Quick Tab Movements
+" Function to create bookmarks (marks)
+function! SetGMark(mark, filename, line_nr)
+    let l:mybuf = bufnr(a:filename, 1)
+    call setpos("'".a:mark, [l:mybuf, a:line_nr, 1, 0])
+endf
+" Set the various marks to load common files like a champ
+call SetGMark('L', '/Users/krwilliams/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
+call SetGMark('T', '/Users/krwilliams/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
+call SetGMark('V', '/Users/krwilliams/.vim/config/.vimrc', 58)
+
+" Quick Tab/Buffer Movements
+map <Leader>j :bn <CR>
+map <Leader>k :bp <CR>
 map <Leader>l :tabnext <CR>
 map <Leader>h :tabprev <CR>
+map <Leader>x :bd <CR>
 
 " Quicker scrolling
-nnoremap <PageUp> <C-u>
-nnoremap <PageDown> <C-d>
-
-" Quicker switch to previous buffer
-map <Leader>n :exe "bn" <CR>
-
-" Close current buffer quicker
-map <Leader>q :exe "bwipeout" <CR>
-
-" Close current buffer and return to previous
-map <F7> :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
-map <Leader>x :exe "b#" <CR> <bar> :exe "bwipeout#" <CR>
+nnoremap <PageUp> <S-{>
+nnoremap <PageDown> <S-}>
 
 " This will execute the current line in bash silently
 map <Leader>e :exe "silent .w !bash" <CR>
@@ -119,7 +127,7 @@ nnoremap <silent> - 10<C-w><
 nnoremap <silent> _ 10<C-w>-
 nnoremap <silent> + 10<C-w>+
 
-" The following F2, F3 commands save and open a session
+" The following commands save and open a session
 nnoremap <Leader>ss :mksession! ~/vim-sessions/
 nnoremap <Leader>so :source ~/vim-sessions/
 
@@ -174,9 +182,6 @@ execute pathogen#infect()
 
 " =============== Plugin Specific ==================
 "
-" https://vimawesome.com/plugin/nerdtree-red
-map <Leader>o :NERDTreeToggle<CR>
-map <Leader>i :NERDTreeFind<CR>
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'wombat',
@@ -200,13 +205,6 @@ set noshowmode
 let g:php_syntax_extensions_enabled = ["php"]
 let g:PHP_outdentphpescape = 0
 
-autocmd BufWritePost ~/notes/*.md call WriteNotes2Server()
-function WriteNotes2Server()
-    :Vimwiki2HTML
-    :!rsync -ru -e 'ssh -p 7822' ~/notes_html/* nirvananotes@notes.nirvanasites.com:~/public_html/
-    :redraw!
-endfunction
-
 set rtp+=/usr/local/opt/fzf
 
 autocmd FileType php setlocal indentkeys-==<?
@@ -216,3 +214,7 @@ autocmd FileType php setlocal indentkeys-==?>
 let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
+
+set termguicolors     " enable true colors support
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
