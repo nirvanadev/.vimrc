@@ -28,6 +28,7 @@ set showmatch
 set mouse=nicr
 set viminfo='100,f1
 
+set t_ut=""
 
 " Enable autocompletion:
 set wildmode=longest,list,full
@@ -63,9 +64,24 @@ map <Leader>no :NERDTreeToggle<CR>
 map <Leader>ni :NERDTreeFind<CR>
 
 " Orgmode mappings
-map <Leader>ok <Plug>OrgNewHeadingAboveNormal
-map <Leader>oj <Plug>OrgNewHeadingBelowNormal
-map <Leader>oc <Plug>OrgCheckBoxToggle
+map <C-j> <localleader>hh
+map <C-k> <localleader>hN
+map <C-m> <localleader>cc
+map <Leader>c <localleader>cc
+
+" Move lines like a boss
+nnoremap <localleader>j :m .+1<CR>==
+nnoremap <localleader>k :m .-2<CR>==
+inoremap <localleader>j <Esc>:m .+1<CR>==gi
+inoremap <localleader>k <Esc>:m .-2<CR>==gi
+vnoremap <localleader>j :m '>+1<CR>gv=gv
+vnoremap <localleader>k :m '<-2<CR>gv=gv
+
+" map <Leader>ok <localleader>hN
+" map <Leader>oj <Plug>OrgNewHeadingBelowNormal
+" Quick saving
+map <F1> :w<CR><Esc>
+imap <F1> <c-o><F1>
 
 " Split jumping
 nnoremap <Leader>wl <C-W><C-L>
@@ -79,9 +95,10 @@ function! SetGMark(mark, filename, line_nr)
     call setpos("'".a:mark, [l:mybuf, a:line_nr, 1, 0])
 endf
 " Set the various marks to load common files like a champ
-call SetGMark('L', '/Users/krwilliams/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
-call SetGMark('T', '/Users/krwilliams/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
-call SetGMark('V', '/Users/krwilliams/.vim/config/.vimrc', 58)
+call SetGMark('L', '/mnt/d/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
+call SetGMark('T', '/mnt/d/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
+call SetGMark('V', '/home/k33f/.vimrc', 58)
+call SetGMark('A', '/mnt/d/ahk_scripts/ahk_2020/ahk33.ahk', 6)
 
 " Quick Tab/Buffer Movements
 map <Leader>j :bn <CR>
@@ -134,7 +151,7 @@ nnoremap <Leader>so :source ~/vim-sessions/
 " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
 " vnoremap <C-c> "+y
 " map <C-p> "+P
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
@@ -144,6 +161,12 @@ nmap <C-B> <C-O>
 
 " Save as sudo and load file back in
 map <Leader>w :silent w !sudo tee %
+
+" Escape from insert mode when two j's or k's are pressed (because what word has 2
+" friggin j's or k's?)
+imap hh <ESC>l
+imap jj <ESC>j
+imap kk <ESC>k
 
 " ================ Indentation ======================
 
@@ -184,7 +207,7 @@ execute pathogen#infect()
 "
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'ayu_dark',
       \ 'active': {
       \     'left': [ [ 'mode', 'paste' ],
       \               [ 'readonly', 'filename', 'modified', 'myname' ] ]
@@ -202,18 +225,29 @@ set noshowmode
 " let g:vimwiki_folding = 'list'
 "
 
-let g:php_syntax_extensions_enabled = ["php"]
-let g:PHP_outdentphpescape = 0
+" let g:php_syntax_extensions_enabled = ["php"]
+" let g:PHP_outdentphpescape = 0
 
-set rtp+=/usr/local/opt/fzf
+let g:org_indent = 1
 
-autocmd FileType php setlocal indentkeys-==<?
-autocmd FileType php setlocal indentkeys-==?>
+" set rtp+=/usr/local/opt/fzf
+set rtp+=~/.fzf
+
+" autocmd FileType php setlocal indentkeys-==<?
+" autocmd FileType php setlocal indentkeys-==?>
 
 " Let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
+
+let s:clip = '/mnt/c/Windows/System32/clip.exe'
+if executable(s:clip)
+	augroup WSLYank
+	  autocmd!
+	  autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+	augroup END
+endif
 
 set termguicolors     " enable true colors support
 let ayucolor="dark"   " for dark version of theme
