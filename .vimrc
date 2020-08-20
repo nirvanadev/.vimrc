@@ -64,10 +64,12 @@ map <Leader>no :NERDTreeToggle<CR>
 map <Leader>ni :NERDTreeFind<CR>
 
 " Orgmode mappings
-map <C-j> <localleader>hh
-map <C-k> <localleader>hN
-map <C-m> <localleader>cc
-map <Leader>c <localleader>cc
+nmap <C-j> <localleader>hh
+imap <C-j> <Esc><localleader>hh
+nmap <C-k> <localleader>hN
+imap <C-k> <Esc><localleader>hN
+nmap <Leader>c <localleader>cc
+
 
 " Move lines like a boss
 nnoremap <localleader>j :m .+1<CR>==
@@ -82,6 +84,9 @@ vnoremap <localleader>k :m '<-2<CR>gv=gv
 " Quick saving
 map <F1> :w<CR><Esc>
 imap <F1> <c-o><F1>
+
+" Find Visually selected text with //
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Split jumping
 nnoremap <Leader>wl <C-W><C-L>
