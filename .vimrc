@@ -130,10 +130,14 @@ imap <F1> <c-o><F1>
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Split jumping
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+" nnoremap <A-h> <C-w>h
+" nnoremap <A-j> <C-w>j
+" nnoremap <A-k> <C-w>k
+" nnoremap <A-l> <C-w>l
+nnoremap <Esc>h <C-w>h
+nnoremap <Esc>j <C-w>j
+nnoremap <Esc>k <C-w>k
+nnoremap <Esc>l <C-w>l
 
 " FUNCTION TO CREATE BOOKMARKS (MARKS)
 function! SetGMark(mark, filename, line_nr)
