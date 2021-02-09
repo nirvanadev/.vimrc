@@ -11,9 +11,14 @@ let g:airline#extensions#ale#enabled = 1
 
 " ================ Plugins ===========================
 call plug#begin("~/.vim/plugged")
+	" Formatting
+	Plug 'tpope/vim-surround'
+	Plug 'mattn/emmet-vim'
+	Plug '2072/PHP-Indenting-for-VIm'
 	" Theme
 	Plug 'dracula/vim', { 'as': 'dracula' }
 	Plug 'ryanoasis/vim-devicons'
+	Plug 'morhetz/gruvbox'
 	" File Tree
 	Plug 'scrooloose/nerdtree'
 	" Status Bar
@@ -136,8 +141,8 @@ function! SetGMark(mark, filename, line_nr)
     call setpos("'".a:mark, [l:mybuf, a:line_nr, 1, 0])
 endf
 " SET THE VARIOUS MARKS TO LOAD COMMON FILES LIKE A CHAMP
-call SetGMark('L', '/d/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
-call SetGMark('T', '/d/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
+call SetGMark('L', '/c/Users/k33f/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
+call SetGMark('T', '/c/Users/k33f/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
 call SetGMark('V', '/home/k33f/.vimrc', 58)
 call SetGMark('A', '/d/ahk_scripts/ahk_2020/ahk33.ahk', 6)
 
