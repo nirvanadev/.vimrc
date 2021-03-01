@@ -145,7 +145,7 @@ function! SetGMark(mark, filename, line_nr)
     call setpos("'".a:mark, [l:mybuf, a:line_nr, 1, 0])
 endf
 " SET THE VARIOUS MARKS TO LOAD COMMON FILES LIKE A CHAMP
-call SetGMark('L', '/c/Users/k33f/ownCloud/hd1/orgnotes/work/compulse/log.org', 5)
+call SetGMark('L', '/c/Users/k33f/ownCloud/hd1/orgnotes/work/compulse/log.org', 6)
 call SetGMark('T', '/c/Users/k33f/ownCloud/hd1/orgnotes/work/compulse/tasks.org', 3)
 call SetGMark('V', '/home/k33f/.vimrc', 58)
 call SetGMark('A', '/d/ahk_scripts/ahk_2020/ahk33.ahk', 6)
