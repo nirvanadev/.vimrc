@@ -14,6 +14,7 @@ call plug#begin("~/.vim/plugged")
 	" Formatting
 	Plug 'tpope/vim-surround'
 	Plug 'mattn/emmet-vim'
+	Plug 'StanAngeloff/php.vim'
 	Plug '2072/PHP-Indenting-for-VIm'
 	" Theme
 	Plug 'dracula/vim', { 'as': 'dracula' }
@@ -105,9 +106,9 @@ nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 let g:org_indent = 1
 let g:org_heading_highlight_colors = ['Title', 'Constant', 'Statement',
     \   'Type', 'DraculaYellow', 'DraculaOrange']
-nmap <C-j> <localleader>hh
+nmap <Leader>o <localleader>hh
 imap <C-j> <Esc><localleader>hh
-nmap <C-k> <localleader>hN
+nmap <Leader>O <localleader>hN
 imap <C-k> <Esc><localleader>hN
 nmap <Leader>c <localleader>cc
 
@@ -124,7 +125,7 @@ vnoremap <localleader>k :m '<-2<CR>gv=gv
 " map <Leader>oj <Plug>OrgNewHeadingBelowNormal
 " Quick saving
 map <F1> :w<CR><Esc>
-imap <F1> <c-o><F1>
+imap <F1> <Esc><F1>
 
 " Find Visually selected text with //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -153,13 +154,17 @@ call SetGMark('A', '/d/ahk_scripts/ahk_2020/ahk33.ahk', 6)
 " QUICK TAB/BUFFER MOVEMENTS
 map <Leader>j :bn <CR>
 map <Leader>k :bp <CR>
-map <Leader>l :tabnext <CR>
-map <Leader>h :tabprev <CR>
+" map <Leader>l :tabnext <CR>
+" map <Leader>h :tabprev <CR>
 map <Leader>x :bd <CR>
 
 " QUICKER SCROLLING
 nnoremap <PageUp> <S-{>
 nnoremap <PageDown> <S-}>
+
+" Toggle FT to php or html
+map <Leader>p :set ft=php <CR>
+map <Leader>h :set ft=html <CR>
 
 " THIS WILL EXECUTE THE CURRENT LINE IN BASH SILENTLY
 map <Leader>e :exe "silent .w !bash" <CR>
@@ -200,7 +205,9 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set noexpandtab
-filetype plugin indent on
+filetype indent on
+
+let g:PHP_outdentphpescape = 0
 
 " WRAPPING
 set wrap       "Wrap lines
