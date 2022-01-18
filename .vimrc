@@ -230,7 +230,7 @@ let &t_EI.="\e[2 q" "EI = NORMAL mode (ELSE)
 set laststatus=2
 
 " WIN 10 CLIPBOARD
-let s:clip = '/c/Windows/System32/clip.exe'
+let s:clip = 'C:\Windows\System32\clip.exe'
 if executable(s:clip)
 	augroup WSLYank
 	  autocmd!
